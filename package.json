@@ -1,15 +1,15 @@
 {
   "name": "attirs-wb",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
-  "description": "Small description for attirs-wb goes here",
+  "description": "Attirs World Codex Wiki",
   "license": "MIT",
-  "author": "",
+  "author": "Nathan Rojas",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://bitbucket.org/Kendandra/attirs_wb.git",
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint .",
@@ -28,6 +28,7 @@
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-qunit": "^4.3.2",
+    "ember-cli-sass": "^7.1.7",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
@@ -44,5 +45,8 @@
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.1"
   }
 }
