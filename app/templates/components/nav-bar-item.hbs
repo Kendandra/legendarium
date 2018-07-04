@@ -1,0 +1,12 @@
+{{#if hasBlock}}
+    <a class={{concat "noselect chevron " submenuCollaseClass}} {{action "collaspe"}}>
+        {{text}}
+    </a>
+    <div class={{concat "noselect collapsible " submenuCollaseClass}}>
+        {{yield}}
+    </div>
+{{else}}
+    <a class="noselect">
+        {{text}}
+    </a>
+{{/if}}
