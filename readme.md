@@ -1,6 +1,6 @@
 # legendarium
 
-> Statick wiki for worldbuilding
+> Static wiki for worldbuilding
 
 ## Build Setup
 
