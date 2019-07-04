@@ -1,11 +1,27 @@
-# Setup Instructions for Development
-* Install latest `node` and `npm`
-* Run `npm install -g "@vue/cli"`
-* Run `npm install -g @vue/cli-init`
-* Run `cd legendarium`
+# legendarium
 
-# Launch
-* Run `npm run dev`
+> Statick wiki for worldbuilding
 
-# Debugging
-* Check for setting up debugging with VSCode. https://vuejs.org/v2/cookbook/debugging-in-vscode.html, make sure the extension is installed.  What's in the repo should already have the settings largely configured.
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
+# run unit tests
+npm run unit
+
+# run all tests
+npm test
+```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
