@@ -8,3 +8,7 @@
 # Launch
 ====================================
 * Run `npm run dev`
+
+# Debugging
+====================================
+* Check for setting up debugging with VSCode. https://vuejs.org/v2/cookbook/debugging-in-vscode.html
