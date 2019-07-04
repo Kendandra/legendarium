@@ -16,4 +16,4 @@ new Vue({
   template: '<App/>'
 })
 
-Vue.use(SuiVue);
+Vue.use(SuiVue)
