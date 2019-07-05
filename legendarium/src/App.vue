@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <event-viewer eventName="The Fall of Tippa"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import EventViewer from './components/EventViewer.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    EventViewer
   }
 }
+
+
 </script>
 
 <style>
