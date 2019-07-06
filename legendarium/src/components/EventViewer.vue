@@ -1,24 +1,34 @@
 <template lang="html">
   <div class="event-viewer">
-    <map-viewer placeName="Tippa" imageFile="~/assets/maps/map_world.png" xPos="1515" yPos="8493"/>
+    <map-viewer
+      placeName="Tippa"
+      v-bind:place="place"/>
     <h1>{{ eventName }}</h1>
   </div>
 </template>
 
 <script>
-import MapViewer from './MapViewer.vue'
+import MapViewer from "./MapViewer.vue";
 export default {
-  name: 'event[-viewer',
+  name: "event-viewer",
   components: {
-      MapViewer
+    MapViewer
   },
   props: {
     eventName: String
+  },
+  data() {
+    return {
+      place: {
+        name: "Tippa",
+        xPos: -1515,
+        yPos: -8493
+      }
+    };
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;
