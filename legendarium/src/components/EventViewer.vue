@@ -21,8 +21,8 @@ export default {
     return {
       place: {
         name: "Tippa",
-        xPos: -1515,
-        yPos: -8493
+        xPos: 1515,
+        yPos: 8493
       }
     };
   }

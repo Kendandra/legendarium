@@ -1,11 +1,13 @@
 <template lang="html">
 <div class="map-viewer">
-  <img class="map-box"
+  <img ref="mapbox"
+    class="map-box"
     v-bind:alt="place.name"
     v-bind:src="require('../assets/maps/map_world.png')"
-    v-bind:style="{ 'object-position': mapObjectPosition() }"/>
-    <p>Height {{devH}}</p>
-    <p>Width {{devW}}</p>
+    v-bind:style="{ 'object-position': mapObjectPosition() }"
+    v-bind:key="mapboxHeight" />
+    <p>Height {{mapboxHeight}}</p>
+    <p>Width {{mapboxWidth}}</p>
     <p>POS {{mapObjectPosition()}}</p>
 </div>
 </template>
@@ -24,44 +26,40 @@ export default {
   data() {
     return {
       mapObjectPosition: () => {
-        let xPosWithOffset = this.place.xPos;
-        let yPosWithOffset = this.place.yPos;
-        return `${xPosWithOffset}px ${yPosWithOffset}px`;
+        let xPosWithOffset = this.place.xPos - (this.mapboxWidth/2);
+        let yPosWithOffset = this.place.yPos - (this.mapboxHeight/2);
+        return `${-xPosWithOffset}px ${-yPosWithOffset}px`;
       },
-      devH: 5,
-      devW: 10,
-      //windowWidth
+      mapboxHeight: 0,
+      mapboxWidth: 0,
     };
   },
 
   mounted() {
+    // HACK: Seems that even with $nextTick clientHeight isn't populated yet (though clientWidth is)
+    // This re-evaluate give us time for this to populate.  Timeout 0 (or even 10) doesn't work, so
+    // no clue if this will work on all clients all the time.
+    setTimeout(() => { this.setMapDimensions(); }, 100);
+
+
     this.$nextTick(function() {
-      window.addEventListener('resize', this.getMapHeight);
-      window.addEventListener('resize', this.getMapWidth);
-
+      window.addEventListener("resize", this.setMapDimensions);
       //Init
-      this.getMapHeight()
-      this.getMapWidth()
-    })
-
+      this.setMapDimensions();
+    });
   },
 
   methods: {
-    getWindowWidth() {
-        //this.windowWidth = $ref;
-      },
-
-      getWindowHeight() {
-        this.windowHeight = document.documentElement.clientHeight;
-      }
+    setMapDimensions() {
+      this.mapboxWidth = this.$refs.mapbox.clientWidth;
+      this.mapboxHeight = this.$refs.mapbox.clientHeight;
+    },
   },
   computed: {},
 
   beforeDestroy() {
-    window.removeEventListener('resize', this.getWindowWidth);
-    window.removeEventListener('resize', this.getWindowHeight);
-  },
-
+    window.removeEventListener("resize", this.setMapDimensions);
+  }
 };
 </script>
 
