@@ -1,47 +1,54 @@
 <template lang="html">
-  <div class="event-viewer">
-    <map-viewer
-      placeName="Tippa"
-      v-bind:place="place"/>
-    <h1>{{ eventName }}</h1>
-  </div>
+<div class="event-viewer">
+    <map-viewer v-if="activeEvent.place" v-bind:place="activeEvent.place" />
+    <timeline-selector v-bind:timelines="events" />
+    <div class="event-viewer-details">
+        <h1>{{ activeEvent.name }}</h1>
+        <p>{{ activeEvent.description }}</p>
+    </div>
+</div>
 </template>
 
 <script>
 import MapViewer from "./MapViewer.vue";
+import TimelineSelector from './TimelineSelector.vue'
+
 export default {
-  name: "event-viewer",
-  components: {
-    MapViewer
-  },
-  props: {
-    eventName: String
-  },
-  data() {
-    return {
-      place: {
-        name: "Tippa",
-        xPos: 1515,
-        yPos: 8493
-      }
-    };
-  }
+    name: "event-viewer",
+    components: {
+        MapViewer,
+        TimelineSelector
+    },
+    props: {
+        events: {
+            type: Array,
+            required: true
+        }
+    },
+    data() {
+        return {
+            activeEvent: null
+        };
+    },
+    methods: {
+        setActiveEvent: function (index) {
+            this.activeEvent = this.events[index];
+        }
+    },
+
+    created() {
+        this.setActiveEvent(0);
+    }
 };
 </script>
 
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.event-viewer {
+    display: flex;
+    flex-direction: column;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+
+.event-viewer-details h1 {
+    margin: 40px 0 0;
 }
 </style>

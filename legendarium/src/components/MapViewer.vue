@@ -1,14 +1,12 @@
 <template lang="html">
-<div class="map-viewer">
+<div class="map-viewer"
+  v-bind:style="{'background-image': `url(${require('../assets/map_loading_placeholder.jpg')})`}">
   <img ref="mapbox"
     class="map-box"
     v-bind:alt="place.name"
     v-bind:src="require('../assets/maps/map_world.png')"
     v-bind:style="{ 'object-position': mapObjectPosition() }"
     v-bind:key="mapboxHeight" />
-    <p>Height {{mapboxHeight}}</p>
-    <p>Width {{mapboxWidth}}</p>
-    <p>POS {{mapObjectPosition()}}</p>
 </div>
 </template>
 
@@ -69,5 +67,11 @@ export default {
   width: 100%;
   max-height: 400px;
   max-width: 1000px;
+}
+.map-viewer {
+  width: 100%;
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 </style>
