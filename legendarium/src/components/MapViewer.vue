@@ -1,12 +1,12 @@
 <template lang="html">
 <div class="map-viewer">
     <!-- PLACE BREAD CRUMBS COMPONENT? -->
-    <div class="map-box" v-bind:style="{'background-image': `url(${require('../assets/map_loading_placeholder.jpg')})`}">
-        <img ref="mapbox"
-        v-bind:alt="place.name"
-        v-bind:src="require('../assets/maps/map_world.png')"
-        v-bind:style="{ 'object-position': mapObjectPosition() }"
-        v-bind:key="mapboxHeight" />
+  <div class="map-box" v-bind:style="{'background-image': `url(${require('../assets/map_loading_placeholder.jpg')})`}">
+    <img ref="mapbox"
+      v-bind:alt="place.name"
+      v-bind:src="require('../assets/maps/map_world.png')"
+      v-bind:style="{ 'object-position': mapObjectPosition() }"
+      v-bind:key="mapboxHeight" />
   </div>
 </div>
 </template>
@@ -77,5 +77,6 @@ export default {
     max-width: 1000px;
     transition: object-position .4s cubic-bezier(1, .12, .15, .87), transform .4s;
 }
+
 
 </style>

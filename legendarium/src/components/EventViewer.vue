@@ -35,10 +35,10 @@ export default {
         };
     },
     methods: {
-        setActiveEventByIndex: function (index) {
+        setActiveEventByIndex(index) {
             this.activeEvent = this.events[index];
         },
-        setActiveEventByEventId: function (id) {
+        setActiveEventByEventId(id) {
             let foundEvent = this.events.find(x => x.id == id);
             if (foundEvent === null || foundEvent === undefined) {
                 this.setActiveEventByIndex(0);
