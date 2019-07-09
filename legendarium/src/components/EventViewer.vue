@@ -1,11 +1,11 @@
 <template lang="html">
 <div class="event-viewer">
     <map-viewer v-if="activeEvent.place" v-bind:place="activeEvent.place" />
-    <timeline-selector v-bind:timelines="events" />
-    <div class="event-viewer-details">
+    <timeline-selector v-bind:events="events" v-bind:activeEventId="activeEvent.id" />
+    <section class="event-viewer-details">
         <h1>{{ activeEvent.name }}</h1>
         <p>{{ activeEvent.description }}</p>
-    </div>
+    </section>
 </div>
 </template>
 
@@ -23,6 +23,10 @@ export default {
         events: {
             type: Array,
             required: true
+        },
+        activeEventId: {
+            type: String,
+            required: false
         }
     },
     data() {
@@ -31,13 +35,29 @@ export default {
         };
     },
     methods: {
-        setActiveEvent: function (index) {
+        setActiveEventByIndex: function (index) {
             this.activeEvent = this.events[index];
+        },
+        setActiveEventByEventId: function (id) {
+            let foundEvent = this.events.find(x => x.id == id);
+            if (foundEvent === null || foundEvent === undefined) {
+                this.setActiveEventByIndex(0);
+
+                // eslint-disable-next-line
+                console.warn("Was asked to view event {" + id + "} but couldn't find it in events list");
+            } else {
+                this.activeEvent = foundEvent;
+            }
+
         }
     },
 
     created() {
-        this.setActiveEvent(0);
+        if (this.activeEventId === undefined) {
+            this.setActiveEventByIndex(0);
+        } else {
+            this.setActiveEventByEventId(this.activeEventId);
+        }
     }
 };
 </script>

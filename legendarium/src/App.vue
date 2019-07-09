@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <event-viewer v-bind:events="events" />
+    <event-viewer v-bind:events="events" activeEventId="evt:8"/>
 </div>
 </template>
 
@@ -16,9 +16,11 @@ export default {
     data() {
         return {
             events: [{
+                    id:"evt:1",
                     name: "The Fall of Tippa",
                     description: "On the Second Awakening of the Drider Prime, the small ranching village of Tippa",
                     place: {
+                        id: "pla:1",
                         name: "Tippa",
                         xPos: 1515,
                         yPos: 8493
@@ -30,10 +32,12 @@ export default {
                     }
                 },
                 {
+                    id:"evt:2",
                     name: "The Eighth Kraal'Zerah Rises",
                     description: "Red Dragonqueen Salyrathuum constructs the Kraal'Zerah to anoint a successor to the red dragonflight's crown.",
                     place: {
-                        name: "Tippa",
+                        id: "pla:2",
+                        name: "Kraal'Zerah",
                         xPos: 4375,
                         yPos: 9090
                     },
