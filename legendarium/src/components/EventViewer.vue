@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="event-viewer">
     <map-viewer v-if="activeEvent.place" v-bind:place="activeEvent.place" />
-    <timeline-selector v-bind:events="events" v-bind:activeEventId="activeEvent.id" />
+    <timeline-selector v-bind:events="events" v-bind:activeEventId="activeEvent.id"  v-on:set-active-event="setActiveEventByEventId" />
     <section class="event-viewer-details">
         <h1>{{ activeEvent.name }}</h1>
         <p>{{ activeEvent.description }}</p>

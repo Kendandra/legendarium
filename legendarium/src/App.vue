@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <event-viewer v-bind:events="events" activeEventId="evt:8"/>
+    <event-viewer v-bind:events="events" activeEventId="evt:1"/>
 </div>
 </template>
 
@@ -45,6 +45,22 @@ export default {
                       calendar: "attris-ages",
                       age: "golden",
                       year: "250"
+                    }
+                },
+                                {
+                    id:"evt:3",
+                    name: "The Doom of the Desert's Downfall",
+                    description: "After a crushing defeat in the Savage Lands, Illmyrth retreated to the Craovuu Arena.  Little did she know, an ambush awaited her that would be her downfall.",
+                    place: {
+                        id: "pla:3",
+                        name: "Craovuu Arena",
+                        xPos: 2014,
+                        yPos: 1595
+                    },
+                    epoch: {
+                      calendar: "attris-ages",
+                      age: "golden",
+                      year: "623"
                     }
                 }
             ]

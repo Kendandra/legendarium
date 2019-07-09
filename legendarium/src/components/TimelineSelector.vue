@@ -4,7 +4,7 @@
         <li v-for="event in events"
           v-bind:key="event.id"
           v-bind:class="{ 'active': event.id == activeEventId }"
-          v-on:click="setEventTo(event)">
+          v-on:click="$emit('set-active-event', event.id)">
             {{ event.name }}
         </li>
     </ul>
@@ -33,9 +33,7 @@ export default {
         }
     },
     methods: {
-      setEventTo: function(event) {
 
-      }
     },
     computed: {
 
