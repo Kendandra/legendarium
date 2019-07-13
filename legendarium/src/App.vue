@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <event-viewer v-bind:events="events" activeEventId="evt:1"/>
+    <event-viewer v-bind:events="events" activeEventId="evt:1" />
 </div>
 </template>
 
@@ -10,57 +10,72 @@ import EventViewer from './components/EventViewer.vue'
 export default {
     name: 'app',
     components: {
-      EventViewer
-      },
+        EventViewer
+    },
 
     data() {
         return {
             events: [{
-                    id:"evt:1",
+                    id: "evnt-1",
                     name: "The Fall of Tippa",
                     description: "On the Second Awakening of the Drider Prime, the small ranching village of Tippa",
                     place: {
-                        id: "pla:1",
+                        id: "plce-1",
                         name: "Tippa",
                         xPos: 1515,
                         yPos: 8493
                     },
+                    saga: {
+                        id: "saga-2",
+                        name: "Driders' Dominion",
+                        shortName: "Driders"
+                    },
                     epoch: {
-                      calendar: "attris-ages",
-                      age: "golden",
-                      year: "150"
+                        calendar: "attris-ages",
+                        age: "golden",
+                        year: "150"
                     }
                 },
                 {
-                    id:"evt:2",
+                    id: "evnt-2",
                     name: "The Eighth Kraal'Zerah Rises",
                     description: "Red Dragonqueen Salyrathuum constructs the Kraal'Zerah to anoint a successor to the red dragonflight's crown.",
                     place: {
-                        id: "pla:2",
+                        id: "plce-2",
                         name: "Kraal'Zerah",
                         xPos: 4375,
                         yPos: 9090
                     },
+                    saga: {
+                        id: "saga-1",
+                        name: "Tale of the Tooth and Claw",
+                        shortName: "Zurakaal"
+                    },
                     epoch: {
-                      calendar: "attris-ages",
-                      age: "golden",
-                      year: "250"
+                        calendar: "attris-ages",
+                        age: "golden",
+                        year: "1623"
                     }
                 },
-                                {
-                    id:"evt:3",
+                {
+                    id: "evnt-3",
                     name: "The Doom of the Desert's Downfall",
                     description: "After a crushing defeat in the Savage Lands, Illmyrth retreated to the Craovuu Arena.  Little did she know, an ambush awaited her that would be her downfall.",
                     place: {
-                        id: "pla:3",
+                        id: "plce-3",
                         name: "Craovuu Arena",
                         xPos: 2014,
                         yPos: 1595
                     },
+                    saga: {
+                        id: "saga-1",
+                        name: "Tale of the Tooth and Claw",
+                        shortName: "Zurakaal"
+                    },
                     epoch: {
-                      calendar: "attris-ages",
-                      age: "golden",
-                      year: "623"
+                        calendar: "attris-ages",
+                        age: "golden",
+                        year: "250"
                     }
                 }
             ]
