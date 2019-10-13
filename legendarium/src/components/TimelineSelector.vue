@@ -10,28 +10,17 @@
             {{saga.saga.id}} -- {{saga.saga.name}}
         </li>
     </ul>
-    <svg width="100%" height="100px" viewBox="0 0 200 200">
+    <svg ref="svg" width="100%" height="100px" >
         <!-- Draw Saga lines -->
-        <g v-for="(saga, index) in sagas"
-            v-bind:key="saga.saga.id"
-            v-bind:fill="getSagaHexColor(saga.saga.shortName)"
-            v-bind:stroke="getSagaHexColor(saga.saga.shortName)">
+        <g v-for="(saga, index) in sagas" v-bind:key="saga.saga.id" v-bind:fill="getSagaHexColor(saga.saga.shortName)" v-bind:stroke="getSagaHexColor(saga.saga.shortName)">
 
-            <line x1="0" x2="200" y1="100" y2="100"/>
+            <line x1="0" v-bind:x2="50" y1="getSagaLineY(saga)" y2="100" />
         </g>
 
         <!-- Draw event dots -->
-        <g v-for="(event, index) in orderedEvents"
-            v-bind:key="event.id"
-            v-on:click="$emit('set-active-event', event.id)"
-            v-bind:class="{ 'active': isActiveEvent(event) }"
-            v-bind:fill="getSagaHexColor(event.saga.shortName)"
-            v-bind:stroke="getSagaHexColor(event.saga.shortName)">
+        <g v-for="(event, index) in orderedEvents" v-bind:key="event.id" v-on:click="$emit('set-active-event', event.id)" v-bind:class="{ 'active': isActiveEvent(event) }" v-bind:fill="getSagaHexColor(event.saga.shortName)" v-bind:stroke="getSagaHexColor(event.saga.shortName)">
 
-            <circle
-                v-bind:r="getEventDotRadius(event)"
-                v-bind:cx="getEventDotX(index)"
-                cy="50" >
+            <circle v-bind:r="getEventDotRadius(event)" v-bind:cx="getEventDotX(index)" cy="50">
                 <title>{{event.epoch.age}}:{{event.epoch.year}} -- {{ event.name }}</title>
             </circle>
         </g>
@@ -54,36 +43,56 @@ export default {
             required: false
         }
     },
-    mounted() {
-
-    },
     data() {
         return {
-
-        }
+            svgWidth: 0,
+            svgHeight: 0,
+        };
     },
+
+    mounted() {
+        // HACK: Seems that even with $nextTick clientHeight isn't populated yet (though clientWidth is)
+        // This re-evaluate give us time for this to populate.  Timeout 0 (or even 10) doesn't work, so
+        // no clue if this will work on all clients all the time.
+        setTimeout(() => {
+            //this.setSvgDimensions();
+        }, 100);
+
+        this.$nextTick(function () {
+            //window.addEventListener("resize", this.setSvgDimensions);
+            //Init
+            //this.setSvgDimensions();
+        });
+    },
+
     methods: {
+        setSvgDimensions() {
+            this.svgWidth = this.$refs.svg.clientWidth;
+            this.svgHeight = this.$refs.svg.clientHeight;
+        },
+
         isActiveEvent(event) {
             return event.id == this.activeEventId;
         },
 
         // Event based methods
         getEventDotX(eventIndex) {
-            return eventIndex * 100;
+            return 50 + eventIndex * 100;
         },
+
         getEventDotRadius(event) {
             if (this.isActiveEvent(event)) {
-                return 20;
+                return "10px";
             } else {
-                return 10;
+                return "5px";
             }
         },
 
         // Saga based methods
-        getSagaLineStart(event) {
-            console.log(event);
-            return 50;
+        getSagaLineY(saga) {
+            return;
         },
+
         getSagaHexColor(sagaName) {
             return color.stringToHexColor(sagaName);
         }
@@ -109,7 +118,13 @@ export default {
                 sagas[event.saga.id].events.push(event);
             });
             return sagas;
+        },
+        getSagaLineEndingX() {
+            return this.svgWidth;
         }
+    },
+    beforeDestroy() {
+        window.removeEventListener("resize", this.setSvgDimensions);
     }
 }
 </script>
@@ -119,14 +134,19 @@ export default {
     font-weight: bold;
 }
 
-.timeline-selector svg {
-    stroke-width: 5;
+.timeline-selector svg circle {
+    stroke-width: 4;
+}
+
+.timeline-selector svg line {
+    stroke-width: 6;
 }
 
 .timeline-selector svg g.active circle {
-    stroke-width: 10;
+    stroke-width: 8;
     fill: white;
 }
+
 .resizeable-svg-container {
     display: inline-block;
     position: relative;
