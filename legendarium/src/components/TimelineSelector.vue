@@ -45,9 +45,11 @@ export default {
         activeEventId: {
             type: String,
             required: false
-        }
+        },
     },
     data() {
+        const circleRadius = 5;
+        const maxCircleRadius = 10;
         return {
             svgWidth: 0,
             svgHeight: 0,
@@ -182,9 +184,6 @@ export default {
             return this.svgWidth;
         }
     },
-    beforeDestroy() {
-        window.removeEventListener("resize", this.setSvgDimensions);
-    }
 }
 </script>
 
