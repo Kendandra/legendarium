@@ -10,8 +10,11 @@
             {{saga.saga.id}} -- {{saga.saga.name}}
         </li>
     </ul>
-    <svg ref="svg" width="100%" height="100px" >
-        <g class="central-timeline"><line x1="0%" x2="100%" y1="50%" y2="50%" /></g>
+    <p>{{totalTicks}}</p>
+    <p>{{ svgWidth }}</p>
+    <p>{{ maxCircleRadius }}</p>
+    <svg ref="svg" width="100%" height="100%" >
+        <g class="central-timeline"><line x1="0%" x2="100%" y1="50px" y2="50px" /></g>
         <g v-for="tick in ticks" 
             class="central-timeline"
             v-bind:key="tick.id">
@@ -51,7 +54,7 @@ export default {
         return {
             svgWidth: 0,
             svgHeight: 0,
-            totalTicks: 20,
+            totalTicks: 10,
             circleRadius: 5,
             maxCircleRadius: 10,
         };
@@ -62,13 +65,13 @@ export default {
         // This re-evaluate give us time for this to populate.  Timeout 0 (or even 10) doesn't work, so
         // no clue if this will work on all clients all the time.
         setTimeout(() => {
-            //this.setSvgDimensions();
+            this.setSvgDimensions();
         }, 100);
 
         this.$nextTick(function () {
-            //window.addEventListener("resize", this.setSvgDimensions);
+            window.addEventListener("resize", this.setSvgDimensions);
             //Init
-            //this.setSvgDimensions();
+            this.setSvgDimensions();
         });
     },
 
@@ -76,6 +79,7 @@ export default {
         setSvgDimensions() {
             this.svgWidth = this.$refs.svg.clientWidth;
             this.svgHeight = this.$refs.svg.clientHeight;
+            this.totalTicks = Math.round(this.$refs.svg.clientWidth / (this.maxCircleRadius * 4))
         },
 
         isActiveEvent(event) {
