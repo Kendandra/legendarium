@@ -10,9 +10,6 @@
             {{saga.saga.id}} -- {{saga.saga.name}}
         </li>
     </ul>
-    <p>{{totalTicks}}</p>
-    <p>{{ svgWidth }}</p>
-    <p>{{ maxCircleRadius }}</p>
     <svg ref="svg" width="100%" height="100%" >
         <g class="central-timeline"><line x1="0%" x2="100%" y1="50px" y2="50px" /></g>
         <g v-for="tick in ticks" 
