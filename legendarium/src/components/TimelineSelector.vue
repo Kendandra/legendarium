@@ -11,9 +11,18 @@
         </li>
     </ul>
     <svg ref="svg" width="100%" height="100px" >
-        <g fill="#2b2b2b" stroke="#2b2b2b"><line class="central-timeline" x1="0" x2="300" y1="50" y2="50" /></g>
-        <g v-for="(event, index) in orderedEvents" v-bind:key="event.id" v-on:click="$emit('set-active-event', event.id)" v-bind:class="{ 'active': isActiveEvent(event) }" v-bind:fill="getSagaHexColor(event.saga.shortName)" v-bind:stroke="getSagaHexColor(event.saga.shortName)">
-            <circle v-bind:r="getEventDotRadius(event)" v-bind:cx="getEventDotX(index)" cy="50">
+        <g class="central-timeline"><line x1="0%" x2="100%" y1="50%" y2="50%" /></g>
+        <g v-for="tick in ticks" 
+            class="central-timeline"
+            v-bind:key="tick.id">
+            <line class="tick" v-bind:x1="tick.posX" v-bind:x2="tick.posX" y1="40px" y2="60px" />
+        </g>
+        <g v-for="(event, index) in orderedEvents" 
+            v-bind:key="event.id" v-on:click="$emit('set-active-event', event.id)" 
+            v-bind:class="{ 'active': isActiveEvent(event) }" 
+            v-bind:fill="getSagaHexColor(event.saga.shortName)" 
+            v-bind:stroke="getSagaHexColor(event.saga.shortName)">
+            <circle v-bind:r="getEventDotRadius(event)" v-bind:cx="getEventDotX(event, index)" cy="50%">
                 <title>{{event.epoch.age}}:{{event.epoch.year}} -- {{ event.name }}</title>
             </circle>
         </g>
@@ -40,6 +49,7 @@ export default {
         return {
             svgWidth: 0,
             svgHeight: 0,
+            totalTicks: 20,
         };
     },
 
@@ -68,9 +78,11 @@ export default {
             return event.id == this.activeEventId;
         },
 
+
         // Event based methods
-        getEventDotX(eventIndex) {
-            return 50 + eventIndex * 100;
+        getEventDotX(event) {
+            const relativeTick = (Number(event.epoch.year) - this.offsetStartYear) / this.timeUnits;
+            return this.ticks[Math.floor(relativeTick)].posX
         },
 
         getEventDotRadius(event) {
@@ -96,6 +108,43 @@ export default {
             // Since the events array is a proprety, we should avoid mutations as a best practice.
             // TODO: Handle multiple ages
             return this.events.concat().sort((a, b) => Number(a.epoch.year) - Number(b.epoch.year));
+        },
+
+        startYear() {
+            return Number(this.orderedEvents[0].epoch.year)
+        },
+
+        endYear() {
+            return Number(this.orderedEvents[this.orderedEvents.length - 1].epoch.year)
+        },
+
+        yearRange() {
+            return this.endYear - this.startYear
+        },
+
+        timeUnits() {
+            return (this.yearRange) / this.totalTicks;
+        },
+
+        offsetStartYear() {
+            return this.startYear - this.timeUnits;
+        },
+
+        offsetTickAmount() {
+            // Offset by 3 for 1 tick at the end, 1 tick at the beginning and 1 more for aligning to 20 for array indexing.
+            return this.totalTicks + 3
+        },
+
+        ticks() {
+            // Generates an array from the requested amount of totalTicks. If 20 makes [0, 1, 2, ... 19]
+            // 
+            const tickRange = [...Array(this.offsetTickAmount).keys()];
+            const tickObjArray = tickRange.map(t => ({
+                posX: (100 / this.offsetTickAmount) * t + "%",
+                tick: t,
+                year: t * this.timeUnits + this.offsetStartYear
+            }));
+            return tickObjArray
         },
 
         sagas() {
@@ -131,13 +180,20 @@ export default {
     stroke-width: 4;
 }
 
-.timeline-selector svg line {
-    stroke-width: 6;
-}
-
 .timeline-selector svg g.active circle {
     stroke-width: 8;
     fill: white;
+}
+
+.central-timeline {
+    fill: #2b2b2b;
+    stroke: #2b2b2b;
+    line {
+        stroke-width: 3;
+    }
+    .tick {
+        stroke-width: 1;
+    }
 }
 
 .resizeable-svg-container {
