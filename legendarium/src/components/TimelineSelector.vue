@@ -11,15 +11,8 @@
         </li>
     </ul>
     <svg ref="svg" width="100%" height="100px" >
-        <!-- Draw Saga lines -->
-        <g v-for="(saga, index) in sagas" v-bind:key="saga.saga.id" v-bind:fill="getSagaHexColor(saga.saga.shortName)" v-bind:stroke="getSagaHexColor(saga.saga.shortName)">
-
-            <line x1="0" v-bind:x2="50" y1="getSagaLineY(saga)" y2="100" />
-        </g>
-
-        <!-- Draw event dots -->
+        <g fill="#2b2b2b" stroke="#2b2b2b"><line class="central-timeline" x1="0" x2="300" y1="50" y2="50" /></g>
         <g v-for="(event, index) in orderedEvents" v-bind:key="event.id" v-on:click="$emit('set-active-event', event.id)" v-bind:class="{ 'active': isActiveEvent(event) }" v-bind:fill="getSagaHexColor(event.saga.shortName)" v-bind:stroke="getSagaHexColor(event.saga.shortName)">
-
             <circle v-bind:r="getEventDotRadius(event)" v-bind:cx="getEventDotX(index)" cy="50">
                 <title>{{event.epoch.age}}:{{event.epoch.year}} -- {{ event.name }}</title>
             </circle>
@@ -89,9 +82,9 @@ export default {
         },
 
         // Saga based methods
-        getSagaLineY(saga) {
-            return;
-        },
+        //getSagaLineY(saga) {
+        //    return;
+        //},
 
         getSagaHexColor(sagaName) {
             return color.stringToHexColor(sagaName);
