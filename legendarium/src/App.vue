@@ -77,6 +77,27 @@ export default {
                         age: "golden",
                         year: "250"
                     }
+                },
+                {
+                    id: "evnt-4",
+                    name: "Lore Ipsum Attris",
+                    description: "I am here to be as annoying as possible to place on your timeline haha.",
+                    place: {
+                        id: "plce-3",
+                        name: "Craovuu Arena",
+                        xPos: 2014,
+                        yPos: 1595
+                    },
+                    saga: {
+                        id: "saga-1",
+                        name: "Tale of the Tooth and Claw",
+                        shortName: "Zurakaal"
+                    },
+                    epoch: {
+                        calendar: "attris-ages",
+                        age: "golden",
+                        year: "250"
+                    }
                 }
             ]
         }

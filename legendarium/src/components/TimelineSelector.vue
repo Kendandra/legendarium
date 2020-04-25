@@ -22,7 +22,9 @@
             v-bind:class="{ 'active': isActiveEvent(event) }" 
             v-bind:fill="getSagaHexColor(event.saga.shortName)" 
             v-bind:stroke="getSagaHexColor(event.saga.shortName)">
-            <circle v-bind:r="getEventDotRadius(event)" v-bind:cx="getEventDotX(event, index)" cy="50%">
+            <circle v-bind:r="getEventDotRadius(event)" 
+                v-bind:cx="getEventDotX(event)" 
+                v-bind:cy="getEventDotY(event, index)">
                 <title>{{event.epoch.age}}:{{event.epoch.year}} -- {{ event.name }}</title>
             </circle>
         </g>
@@ -50,6 +52,8 @@ export default {
             svgWidth: 0,
             svgHeight: 0,
             totalTicks: 20,
+            circleRadius: 5,
+            maxCircleRadius: 10,
         };
     },
 
@@ -81,16 +85,26 @@ export default {
 
         // Event based methods
         getEventDotX(event) {
-            const relativeTick = (Number(event.epoch.year) - this.offsetStartYear) / this.timeUnits;
-            return this.ticks[Math.floor(relativeTick)].posX
+            const tick = this.ticks.find(t => t.events.find(e => e.id === event.id))
+            return tick.posX
         },
 
         getEventDotRadius(event) {
             if (this.isActiveEvent(event)) {
-                return "10px";
+                return this.maxCircleRadius + "px";
             } else {
-                return "5px";
+                return this.circleRadius + "px";
             }
+        },
+
+        getEventDotY(event) {
+            const tick = this.ticks.find(t => t.events.find(e => e.id === event.id));
+            let posY = tick.posY;
+            const offSetY = Number(this.maxCircleRadius * 3 * tick.events.indexOf(event));
+            if (offSetY !== 0) {
+                posY += offSetY;
+            }
+            return posY + "px"
         },
 
         // Saga based methods
@@ -141,8 +155,10 @@ export default {
             const tickRange = [...Array(this.offsetTickAmount).keys()];
             const tickObjArray = tickRange.map(t => ({
                 posX: (100 / this.offsetTickAmount) * t + "%",
+                posY: 50,
                 tick: t,
-                year: t * this.timeUnits + this.offsetStartYear
+                year: t * this.timeUnits + this.offsetStartYear,
+                events: this.orderedEvents.filter(oe => (Math.floor((Number(oe.epoch.year) - this.offsetStartYear) / this.timeUnits) === t))
             }));
             return tickObjArray
         },
