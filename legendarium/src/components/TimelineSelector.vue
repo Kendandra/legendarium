@@ -10,8 +10,8 @@
             {{saga.saga.id}} -- {{saga.saga.name}}
         </li>
     </ul>
-    <svg ref="svg" width="100%" height="100px" >
-        <g class="central-timeline"><line x1="0%" x2="100%" y1="50%" y2="50%" /></g>
+    <svg ref="svg" width="100%" height="100%" >
+        <g class="central-timeline"><line x1="0%" x2="100%" y1="50px" y2="50px" /></g>
         <g v-for="tick in ticks" 
             class="central-timeline"
             v-bind:key="tick.id">
@@ -45,38 +45,19 @@ export default {
         activeEventId: {
             type: String,
             required: false
-        }
+        },
     },
     data() {
+        const circleRadius = 5;
+        const maxCircleRadius = 10;
         return {
-            svgWidth: 0,
-            svgHeight: 0,
             totalTicks: 20,
-            circleRadius: 5,
-            maxCircleRadius: 10,
+            circleRadius: circleRadius,
+            maxCircleRadius: maxCircleRadius,
         };
     },
 
-    mounted() {
-        // HACK: Seems that even with $nextTick clientHeight isn't populated yet (though clientWidth is)
-        // This re-evaluate give us time for this to populate.  Timeout 0 (or even 10) doesn't work, so
-        // no clue if this will work on all clients all the time.
-        setTimeout(() => {
-            //this.setSvgDimensions();
-        }, 100);
-
-        this.$nextTick(function () {
-            //window.addEventListener("resize", this.setSvgDimensions);
-            //Init
-            //this.setSvgDimensions();
-        });
-    },
-
     methods: {
-        setSvgDimensions() {
-            this.svgWidth = this.$refs.svg.clientWidth;
-            this.svgHeight = this.$refs.svg.clientHeight;
-        },
 
         isActiveEvent(event) {
             return event.id == this.activeEventId;
@@ -181,9 +162,6 @@ export default {
             return this.svgWidth;
         }
     },
-    beforeDestroy() {
-        window.removeEventListener("resize", this.setSvgDimensions);
-    }
 }
 </script>
 
